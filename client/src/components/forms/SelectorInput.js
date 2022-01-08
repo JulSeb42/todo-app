@@ -25,7 +25,8 @@ const Label = styled.label`
     transition: ${Variables.Transitions.Short};
     box-sizing: border-box;
     display: inline-block;
-    
+    color: ${Variables.ThemeColors.Black};
+
     &:hover {
         background-color: ${Variables.ThemeColors.Primary70};
         color: ${Variables.ThemeColors.White};
