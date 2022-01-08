@@ -34,11 +34,11 @@ function DangerZone(props) {
                 justify="start"
                 btnstyle="danger"
             >
-                Delete your account
+                {props.btnOpen}
             </Button>
 
             <Container style={{ display: open }} {...props}>
-                <Font.P>Are you sure you want to delete your account?</Font.P>
+                <Font.P>{props.text}</Font.P>
 
                 <ButtonsContainer>
                     <Button
@@ -46,7 +46,7 @@ function DangerZone(props) {
                         btnstyle="danger"
                         type="button"
                     >
-                        Yes, delete my account
+                        {props.btnConfirm}
                     </Button>
 
                     <Button

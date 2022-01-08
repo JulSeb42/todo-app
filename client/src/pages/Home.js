@@ -1,6 +1,5 @@
 // Packages
 import React, { useContext, useState, useEffect } from "react"
-import { Link } from "react-router-dom"
 import axios from "axios"
 
 // Components
@@ -9,6 +8,8 @@ import * as Font from "../components/styles/Font"
 import Page from "../components/layouts/Page"
 import Button from "../components/ui/Button"
 import TitleFlex from "../components/ui/TitleFlex"
+import List from "../components/tasks/List"
+import Card from "../components/tasks/Card"
 
 // Utils
 import getFirstName from "../components/utils/getFirstName"
@@ -27,6 +28,10 @@ function Home() {
             .catch(err => console.log(err))
     }, [user._id])
 
+    const sortedTasks = userTasks.sort((a, b) => {
+        return new Date(a.date) - new Date(b.date)
+    })
+
     return (
         <Page title="Home">
             <TitleFlex>
@@ -40,13 +45,11 @@ function Home() {
             {userTasks.length === 0 ? (
                 <Font.P>You did not create any task yet.</Font.P>
             ) : (
-                <ul>
-                    {userTasks.map(task => (
-                        <li key={task._id}>
-                            <Link to={`/tasks/${task._id}`}>{task.title}</Link>
-                        </li>
+                <List>
+                    {sortedTasks.map(task => (
+                        <Card key={task._id} task={task} index={task._id} />
                     ))}
-                </ul>
+                </List>
             )}
         </Page>
     )

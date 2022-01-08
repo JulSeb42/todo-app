@@ -128,11 +128,11 @@ function Header(props) {
             <Nav>
                 <StyledLink to="/">Home</StyledLink>
 
-                <StyledLink as="button" onClick={() => setIsOpen(!isOpen)}>
+                <StyledLink as="button" onFocus={() => setIsOpen(true)} onBlur={() => setIsOpen(false)}>
                     My account
                 </StyledLink>
 
-                <Drawer className={open} onClick={() => setIsOpen(!isOpen)}>
+                <Drawer className={open} onClick={() => setIsOpen(false)}>
                     <StyledLink to="/edit-account">
                         Edit your account
                     </StyledLink>

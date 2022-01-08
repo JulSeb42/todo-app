@@ -4,6 +4,7 @@ import axios from "axios"
 
 // Components
 import SelectorInput from "../forms/SelectorInput"
+import ListTags from "./ListTags"
 
 function ChangeStatus({ edited, setEdited, ...props }) {
     const handleTodo = e => {
@@ -12,7 +13,7 @@ function ChangeStatus({ edited, setEdited, ...props }) {
         if (e.target.checked) {
             axios
                 .put(`/tasks/task/${props.task._id}/change-status`, requestBody)
-                .then(() => window.location.reload(false))
+                // .then(() => window.location.reload(false))
                 .catch(err => console.log(err))
         }
     }
@@ -23,7 +24,7 @@ function ChangeStatus({ edited, setEdited, ...props }) {
         if (e.target.checked) {
             axios
                 .put(`/tasks/task/${props.task._id}/change-status`, requestBody)
-                .then(() => window.location.reload(false))
+                // .then(() => window.location.reload(false))
                 .catch(err => console.log(err))
         }
     }
@@ -34,18 +35,18 @@ function ChangeStatus({ edited, setEdited, ...props }) {
         if (e.target.checked) {
             axios
                 .put(`/tasks/task/${props.task._id}/change-status`, requestBody)
-                .then(() => window.location.reload(false))
+                // .then(() => window.location.reload(false))
                 .catch(err => console.log(err))
         }
     }
 
     return (
-        <div>
+        <ListTags>
             <SelectorInput
                 label="To do"
                 type="radio"
-                id="todo"
-                name="status"
+                id={`todo-${props.index}`}
+                name={`status-${props.index}`}
                 defaultChecked={props.task.status === "todo" && true}
                 onChange={handleTodo}
             />
@@ -53,8 +54,8 @@ function ChangeStatus({ edited, setEdited, ...props }) {
             <SelectorInput
                 label="Doing"
                 type="radio"
-                id="doing"
-                name="status"
+                id={`doing-${props.index}`}
+                name={`status-${props.index}`}
                 defaultChecked={props.task.status === "doing" && true}
                 onChange={handleDoing}
             />
@@ -62,12 +63,12 @@ function ChangeStatus({ edited, setEdited, ...props }) {
             <SelectorInput
                 label="Done"
                 type="radio"
-                id="done"
-                name="status"
+                id={`done-${props.index}`}
+                name={`status-${props.index}`}
                 defaultChecked={props.task.status === "done" && true}
                 onChange={handleDone}
             />
-        </div>
+        </ListTags>
     )
 }
 

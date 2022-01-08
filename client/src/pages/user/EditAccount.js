@@ -83,7 +83,7 @@ function EditAccount({ edited, setEdited }) {
                 <Link to="/edit-password">Edit your password.</Link>
             </Font.P>
 
-            <DangerZone onClickPrimary={handleDelete} />
+            <DangerZone btnOpen="Delete your account" text="Are you sure you want to delete your account?" btnConfirm="Yes, delete my account" onClickPrimary={handleDelete} />
         </Page>
     )
 }

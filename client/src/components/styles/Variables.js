@@ -4,6 +4,7 @@ export const ColorsCommon = {
     DarkGray: "#2F2F2F",
     Gray: "#767676",
     LightGray: "#C8C8C8",
+    LighterGray: "#E5E5E5",
     White: "#FFFFFF",
 }
 
@@ -50,6 +51,7 @@ export const ThemeColors = {
     DarkGray: ColorsCommon.DarkGray,
     Gray: ColorsCommon.Gray,
     LightGray: ColorsCommon.LightGray,
+    LighterGray: ColorsCommon.LighterGray,
     White: ColorsCommon.White,
 
     Primary: ({ theme }) => theme.Primary,

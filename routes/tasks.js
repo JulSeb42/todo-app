@@ -42,4 +42,30 @@ router.put("/task/:id/change-status", (req, res, next) => {
         .catch(err => next(err))
 })
 
+// Edit task
+router.put("/task/:id/edit", (req, res, next) => {
+    const { title, date, time, description, tags } = req.body
+
+    Task.findByIdAndUpdate(
+        req.params.id,
+        {
+            title,
+            date,
+            time,
+            description,
+            tags,
+        },
+        { new: true }
+    )
+        .then(updatedTask => res.status(200).json({ updatedTask }))
+        .catch(err => next(err))
+})
+
+// Delete task
+router.delete("/task/:id/delete", (req, res, next) => {
+    Task.findByIdAndRemove(req.params.id)
+        .then(() => res.status(200).json({ message: "Task deleted" }))
+        .catch(err => next(err))
+})
+
 module.exports = router
