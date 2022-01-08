@@ -5,9 +5,11 @@ import { useNavigate, Link, Navigate } from "react-router-dom"
 
 // Components
 import { AuthContext } from "../../context/auth"
+import * as Font from "../../components/styles/Font"
 import Page from "../../components/layouts/Page"
 import Form from "../../components/forms/Form"
 import Input from "../../components/forms/Input"
+import Error from "../../components/forms/Error"
 
 function Login() {
     const { loginUser, isLoggedIn } = useContext(AuthContext)
@@ -41,7 +43,7 @@ function Login() {
         <Navigate to="/" />
     ) : (
         <Page title="Login">
-            <h1>Login</h1>
+            <Font.H1>Login</Font.H1>
 
             <Form onSubmit={handleSubmit} btnprimary="Log in">
                 <Input
@@ -61,15 +63,15 @@ function Login() {
                 />
             </Form>
 
-            <p>
+            <Font.P>
                 <Link to="/login/forgot-password">I forgot my password.</Link>
-            </p>
+            </Font.P>
 
-            <p>
+            <Font.P>
                 You don't have an account? <Link to="/signup">Signup</Link>
-            </p>
+            </Font.P>
 
-            {errorMessage && <p>{errorMessage}</p>}
+            {errorMessage && <Error>{errorMessage}</Error>}
         </Page>
     )
 }

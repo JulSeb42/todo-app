@@ -5,9 +5,11 @@ import axios from "axios"
 
 // Components
 import { AuthContext } from "../../context/auth"
+import * as Font from "../../components/styles/Font"
 import Page from "../../components/layouts/Page"
 import Form from "../../components/forms/Form"
 import Input from "../../components/forms/Input"
+import Error from "../../components/forms/Error"
 
 // Utils
 import getRandomString from "../../components/utils/getRandomString"
@@ -17,6 +19,7 @@ function ForgotPassword() {
     const navigate = useNavigate()
 
     const [email, setEmail] = useState("")
+    const [errorMessage, setErrorMessage] = useState(undefined)
 
     const handleEmail = e => setEmail(e.target.value)
 
@@ -24,7 +27,7 @@ function ForgotPassword() {
         e.preventDefault()
 
         const requestBody = {
-            receiver: email,
+            email,
             resetToken: getRandomString(20),
         }
 
@@ -33,21 +36,24 @@ function ForgotPassword() {
             .then(res => {
                 navigate("/login/forgot-password/email-sent")
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                const errorDescription = err.response.data.message
+                setErrorMessage(errorDescription)
+            })
     }
 
     return isLoggedIn ? (
-        <Navigate to="/my-account" />
+        <Navigate to="/" />
     ) : (
         <Page title="I forgot my password">
-            <h1>I forgot my password</h1>
+            <Font.H1>I forgot my password</Font.H1>
 
-            <p>
+            <Font.P>
                 Please enter your email address, we will send you a link to
                 reset your password.
-            </p>
+            </Font.P>
 
-            <Form btnprimary="Send" onSubmit={handleSubmit}>
+            <Form btnprimary="Send" btncancel="/login" onSubmit={handleSubmit}>
                 <Input
                     label="Email"
                     type="email"
@@ -56,6 +62,8 @@ function ForgotPassword() {
                     value={email}
                 />
             </Form>
+
+            {errorMessage && <Error>{errorMessage}</Error>}
         </Page>
     )
 }

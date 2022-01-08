@@ -29,7 +29,7 @@ function EditPassword({ edited, setEdited }) {
                 const { user } = res.data
                 updateUser(user)
                 setEdited(!edited)
-                navigate("/my-account")
+                navigate("/")
             })
             .catch(err => {
                 const errorDescription = err.response.data.errorMessage
@@ -43,7 +43,7 @@ function EditPassword({ edited, setEdited }) {
 
             <Form
                 btnprimary="Save changes"
-                btncancel="/my-account"
+                btncancel="/edit-account"
                 onSubmit={handleSubmit}
             >
                 <Input

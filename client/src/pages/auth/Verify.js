@@ -4,6 +4,8 @@ import { Link } from "react-router-dom"
 import axios from "axios"
 
 // Components
+import * as Font from "../../components/styles/Font"
+import Error from "../../components/forms/Error"
 import Page from "../../components/layouts/Page"
 import { AuthContext } from "../../context/auth"
 
@@ -31,14 +33,14 @@ function Verify({ edited, setEdited }) {
 
     return (
         <Page title="Your account is verified!">
-            <h1>Your account is verified!</h1>
+            <Font.H1>Your account is verified!</Font.H1>
 
-            <p>
+            <Font.P>
                 You can now access all the functionalities on our website.{" "}
-                <Link to="/my-account">Go to your account</Link>.
-            </p>
+                <Link to="/">Go to the homepage</Link>.
+            </Font.P>
 
-            {errorMessage && <p>{errorMessage}</p>}
+            {errorMessage && <Error>{errorMessage}</Error>}
         </Page>
     )
 }

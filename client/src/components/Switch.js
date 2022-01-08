@@ -18,7 +18,6 @@ import ResetPassword from "../pages/auth/ResetPassword"
 import Goodbye from "../pages/auth/Goodbye"
 
 // User
-import MyAccount from "../pages/user/MyAccount"
 import EditAccount from "../pages/user/EditAccount"
 import EditPassword from "../pages/user/EditPassword"
 
@@ -46,7 +45,7 @@ function Switch() {
             .get("/tasks/task")
             .then(res => setAllTasks(res.data))
             .catch(err => console.log(err))
-    }, [])
+    }, [edited])
 
     return (
         <Routes>
@@ -110,16 +109,7 @@ function Switch() {
 
             {/* User */}
             <Route
-                path="/my-account"
-                element={
-                    <ProtectedRoutes redirectTo="/login">
-                        <MyAccount />
-                    </ProtectedRoutes>
-                }
-                preload={scrollToTop()}
-            />
-            <Route
-                path="/my-account/edit"
+                path="/edit-account"
                 element={
                     <ProtectedRoutes redirectTo="/login">
                         <EditAccount edited={edited} setEdited={setEdited} />
@@ -128,7 +118,7 @@ function Switch() {
                 preload={scrollToTop()}
             />
             <Route
-                path="/my-account/edit-password"
+                path="/edit-password"
                 element={
                     <ProtectedRoutes redirectTo="/login">
                         <EditPassword edited={edited} setEdited={setEdited} />

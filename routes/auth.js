@@ -12,8 +12,15 @@ const isLoggedOut = require("../middleware/isLoggedOut")
 const saltRounds = 10
 
 // Logged in user
-router.get("/loggedin", (req, res) => {
-    res.json(req.user)
+router.get("/loggedin", (req, res, next) => {
+    // res.json(req.user)
+
+    User.find(req.user)
+        .populate("tasks")
+        .then(foundUser => {
+            res.json(foundUser)
+        })
+        .catch(err => next(err))
 })
 
 // Signup
@@ -151,28 +158,40 @@ router.put("/verify", (req, res, next) => {
 
 // Forgot password
 router.put("/forgot", (req, res, next) => {
-    const { receiver, resetToken } = req.body
+    const { email, resetToken } = req.body
 
-    User.findOneAndUpdate({ receiver }, { resetToken }, { new: true })
-        .then(foundUser => {
-            let mailDetails = {
-                from: process.env.EMAIL,
-                to: receiver,
-                subject: "Reset your password on Todo app",
-                html: `Hello,<br /><br />To reset your password, <a href="${process.env.ORIGIN}/reset-password/${resetToken}/${foundUser._id}">click here</a>.`,
+    User.findOne({ email })
+        .then(found => {
+            if (!found) {
+                res.status(400).json({
+                    message: "This user does not exist.",
+                })
+            } else {
+                User.findOneAndUpdate(
+                    { email },
+                    { resetToken },
+                    { new: true }
+                ).then(foundUser => {
+                    let mailDetails = {
+                        from: process.env.EMAIL,
+                        to: email,
+                        subject: "Reset your password on Todo app",
+                        html: `Hello,<br /><br />To reset your password, <a href="${process.env.ORIGIN}/reset-password/${resetToken}/${foundUser._id}">click here</a>.`,
+                    }
+
+                    transporter.sendMail(mailDetails, function (err, data) {
+                        if (err) {
+                            console.log(err)
+                        } else {
+                            console.log("Email sent successfully")
+                        }
+                    })
+
+                    res.status(200).json(res.body)
+                })
             }
-
-            transporter.sendMail(mailDetails, function (err, data) {
-                if (err) {
-                    console.log(err)
-                } else {
-                    console.log("Email sent successfully")
-                }
-            })
-
-            res.status(200).json(res.body)
         })
-        .catch(err => console.log(err))
+        .catch(err => next(err))
 })
 
 // Reset password

@@ -5,6 +5,7 @@ import axios from "axios"
 
 // Components
 import { AuthContext } from "../../context/auth"
+import * as Font from "../../components/styles/Font"
 import Page from "../../components/layouts/Page"
 import Form from "../../components/forms/Form"
 import Input from "../../components/forms/Input"
@@ -45,15 +46,18 @@ function NewTask({ edited, setEdited }) {
 
         axios.put("/tasks/new-task", requestBody).then(res => {
             const { user } = res.data
+            console.log(res)
+            // console.log(user)
             updateUser(user)
             setEdited(!edited)
             navigate(`/tasks/${res.data.createdTask._id}`)
-        })
+            // window.location.reload(false)
+        }).catch(err => console.log(err))
     }
 
     return (
         <Page title="New task">
-            <h1>Create a new task</h1>
+            <Font.H1>Create a new task</Font.H1>
 
             <Form
                 btnprimary="Create a task"
@@ -97,9 +101,8 @@ function NewTask({ edited, setEdited }) {
                     id="tags"
                     onChange={handleTags}
                     value={tags}
+                    helper="Please separate all your tags with a comma."
                 />
-
-                <small>Please separate all your tags with a comma.</small>
             </Form>
         </Page>
     )

@@ -4,13 +4,19 @@ import styled from "styled-components"
 // Components
 import * as Variables from "../styles/Variables"
 
-const ButtonsContainer = styled.div`
+// Styles
+const TitleFlex = styled.div`
     display: flex;
-    align-items: center;
+    justify-content: space-between;
 
-    & > *:not(:last-child) {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+        flex-grow: 1;
         margin-right: ${Variables.Margins.S};
     }
 `
 
-export default ButtonsContainer
+export default TitleFlex

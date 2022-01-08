@@ -3,7 +3,7 @@ import React from "react"
 
 // Components
 import Helmet from "./Helmet"
-import Header from "./Header"
+import Container from "./Container"
 
 function Page(props) {
     return (
@@ -14,9 +14,7 @@ function Page(props) {
                 keywords={props.keywords}
             />
 
-            <Header />
-
-            {props.children}
+            <Container>{props.children}</Container>
         </>
     )
 }

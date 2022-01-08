@@ -5,10 +5,12 @@ import axios from "axios"
 
 // Components
 import { AuthContext } from "../../context/auth"
+import * as Font from "../../components/styles/Font"
 import Page from "../../components/layouts/Page"
 import Form from "../../components/forms/Form"
 import Input from "../../components/forms/Input"
 import DangerZone from "../../components/forms/DangerZone"
+import Error from "../../components/forms/Error"
 
 function EditAccount({ edited, setEdited }) {
     const { user, updateUser, logoutUser } = useContext(AuthContext)
@@ -31,7 +33,7 @@ function EditAccount({ edited, setEdited }) {
                 const { user } = res.data
                 updateUser(user)
                 setEdited(!edited)
-                navigate("/my-account")
+                navigate("/")
             })
             .catch(err => {
                 const errorDescription = err.response.data.message
@@ -52,11 +54,11 @@ function EditAccount({ edited, setEdited }) {
 
     return (
         <Page title="Edit your account">
-            <h1>Edit your account</h1>
+            <Font.H1>Edit your account</Font.H1>
 
             <Form
                 btnprimary="Save changes"
-                btncancel="/my-account"
+                btncancel="/"
                 onSubmit={handleSubmit}
             >
                 <Input
@@ -75,13 +77,13 @@ function EditAccount({ edited, setEdited }) {
                 />
             </Form>
 
-            {errorMessage && <p>{errorMessage}</p>}
+            {errorMessage && <Error>{errorMessage}</Error>}
 
-            <p>
-                <Link to="/my-account/edit-password">Edit your password.</Link>
-            </p>
+            <Font.P>
+                <Link to="/edit-password">Edit your password.</Link>
+            </Font.P>
 
-            <DangerZone onClick={handleDelete} />
+            <DangerZone onClickPrimary={handleDelete} />
         </Page>
     )
 }
