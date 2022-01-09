@@ -41,6 +41,32 @@ const Nav = styled.nav`
     & > *:not(:last-child) {
         margin-right: ${Variables.Margins.M};
     }
+
+    @media ${Variables.Breakpoints.Mobile} {
+        position: absolute;
+        width: 100vw;
+        left: 0;
+        top: -200px;
+        flex-direction: column;
+        align-items: flex-start;
+        background-color: ${Variables.ThemeColors.Primary};
+        padding: ${Variables.Margins.XS} 5vw;
+        transition: ${Variables.Transitions.Short};
+        z-index: 999;
+
+        & > *:not(:last-child) {
+            margin-right: 0;
+            margin-bottom: ${Variables.Margins.M};
+        }
+
+        &.open {
+            top: 68px;
+        }
+
+        .button-drawer {
+            display: none;
+        }
+    }
 `
 
 const StyledLink = styled(NavLink)`
@@ -80,6 +106,11 @@ const Separator = styled.span`
     width: 2px;
     height: ${Variables.FontSizes.Body};
     background-color: ${Variables.ColorsCommon.White};
+
+    @media ${Variables.Breakpoints.Mobile} {
+        height: 2px;
+        width: 100%;
+    }
 `
 
 const Drawer = styled.div`
@@ -106,29 +137,113 @@ const Drawer = styled.div`
         max-height: 300px;
         padding: ${Variables.Margins.S} ${Variables.Margins.S};
     }
+
+    @media ${Variables.Breakpoints.Mobile} {
+        position: relative;
+        max-height: inherit;
+        top: 0;
+        right: 0;
+        padding: 0;
+    }
+`
+
+const Burger = styled.button`
+    width: 30px;
+    height: 20px;
+    background: none;
+    border: none;
+    padding: 0;
+    position: relative;
+    display: none;
+
+    span {
+        width: 100%;
+        height: 2px;
+        background-color: ${Variables.ThemeColors.White};
+        position: absolute;
+        left: 0;
+        transition: ${Variables.Transitions.Short};
+
+        &:first-child {
+            top: 0;
+        }
+
+        &:nth-child(2) {
+            top: calc(50% - 2px / 2);
+        }
+
+        &:last-child {
+            bottom: 0;
+        }
+    }
+
+    &.open span {
+        --position: 1;
+        &:first-child {
+            transform: rotate(45deg);
+            top: var(--position);
+        }
+
+        &:nth-child(2) {
+            width: 0;
+        }
+
+        &:last-child {
+            transform: rotate(-45deg);
+            bottom: var(--position);
+        }
+    }
+
+    @media ${Variables.Breakpoints.Mobile} {
+        display: block;
+    }
 `
 
 function Header(props) {
     const { logoutUser } = useContext(AuthContext)
     const navigate = useNavigate()
 
-    const handleLogout = () => {
-        logoutUser()
-        navigate("/login")
-    }
-
     const [isOpen, setIsOpen] = useState(false)
 
     const open = isOpen ? "open" : ""
+
+    // Burger
+    const [isBurgerOpen, setIsBurgerOpen] = useState(false)
+    const burgerOpen = isBurgerOpen ? "open" : ""
+
+    const handleBurger = () => {
+        setIsBurgerOpen(!isBurgerOpen)
+    }
+
+    const handleLogout = () => {
+        logoutUser()
+        navigate("/login")
+        setIsBurgerOpen(false)
+    }
 
     return (
         <Container>
             <Logo to="/">{SiteData.Name}</Logo>
 
-            <Nav>
+            <Burger
+                aria-label="Open / Close menu"
+                onClick={handleBurger}
+                className={burgerOpen}
+            >
+                <span />
+                <span />
+                <span />
+            </Burger>
+
+            <Nav className={burgerOpen} onClick={() => setIsBurgerOpen(false)}>
                 <StyledLink to="/">Home</StyledLink>
 
-                <StyledLink as="button" onFocus={() => setIsOpen(true)} onBlur={() => setIsOpen(false)}>
+                <StyledLink
+                    as="button"
+                    onFocus={() => setIsOpen(true)}
+                    onBlur={() => setIsOpen(false)}
+                    className="button-drawer"
+                >
                     My account
                 </StyledLink>
 

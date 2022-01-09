@@ -17,6 +17,16 @@ const TitleFlex = styled.div`
         flex-grow: 1;
         margin-right: ${Variables.Margins.S};
     }
+
+    @media ${Variables.Breakpoints.Mobile} {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: ${Variables.Margins.S};
+
+        & > * {
+            justify-self: start;
+        }
+    }
 `
 
 export default TitleFlex
