@@ -31,6 +31,7 @@ export const TabButton = styled.button`
     font-family: ${Variables.FontFamily};
     font-weight: ${Variables.FontWeights.Black};
     position: relative;
+    color: ${Variables.ThemeColors.Font};
 
     &:after {
         content: "";

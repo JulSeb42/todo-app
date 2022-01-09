@@ -113,40 +113,6 @@ const Separator = styled.span`
     }
 `
 
-const Drawer = styled.div`
-    position: absolute;
-    top: 90%;
-    background-color: ${Variables.ThemeColors.Primary};
-    right: calc(5vw + 99px + ${Variables.Margins.M});
-    margin-right: 0 !important;
-    padding: 0 ${Variables.Margins.S};
-    border-radius: ${Variables.Radii.M};
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: ${Variables.Margins.S};
-    max-height: 0;
-    overflow: hidden;
-    transition: ${Variables.Transitions.Short};
-
-    a,
-    button {
-        margin-right: 0;
-    }
-
-    &.open {
-        max-height: 300px;
-        padding: ${Variables.Margins.S} ${Variables.Margins.S};
-    }
-
-    @media ${Variables.Breakpoints.Mobile} {
-        position: relative;
-        max-height: inherit;
-        top: 0;
-        right: 0;
-        padding: 0;
-    }
-`
-
 const Burger = styled.button`
     width: 30px;
     height: 20px;
@@ -203,10 +169,6 @@ function Header(props) {
     const { logoutUser } = useContext(AuthContext)
     const navigate = useNavigate()
 
-    const [isOpen, setIsOpen] = useState(false)
-
-    const open = isOpen ? "open" : ""
-
     // Burger
     const [isBurgerOpen, setIsBurgerOpen] = useState(false)
     const burgerOpen = isBurgerOpen ? "open" : ""
@@ -238,23 +200,10 @@ function Header(props) {
             <Nav className={burgerOpen} onClick={() => setIsBurgerOpen(false)}>
                 <StyledLink to="/">Home</StyledLink>
 
-                <StyledLink
-                    as="button"
-                    onFocus={() => setIsOpen(true)}
-                    onBlur={() => setIsOpen(false)}
-                    className="button-drawer"
-                >
-                    My account
+                <StyledLink to="/edit-account">Edit your account</StyledLink>
+                <StyledLink as="button" onClick={handleLogout}>
+                    Log out
                 </StyledLink>
-
-                <Drawer className={open} onClick={() => setIsOpen(false)}>
-                    <StyledLink to="/edit-account">
-                        Edit your account
-                    </StyledLink>
-                    <StyledLink as="button" onClick={handleLogout}>
-                        Log out
-                    </StyledLink>
-                </Drawer>
 
                 <Separator />
 
