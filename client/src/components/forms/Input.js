@@ -6,19 +6,9 @@ import styled, { css } from "styled-components"
 import * as Variables from "../styles/Variables"
 import * as Font from "../styles/Font"
 import Icon from "../ui/Icon"
+import InputContainer from "./InputContainer"
 
 // Styles
-const Container = styled.div`
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: ${Variables.Margins.XXS};
-`
-
-const Label = styled.label`
-    color: ${Variables.ThemeColors.Link};
-    font-weight: ${Variables.FontWeights.Black};
-`
-
 const InputStyled = styled.input`
     width: 100%;
     position: relative;
@@ -46,7 +36,10 @@ const InputStyled = styled.input`
     ${props =>
         props.inputtype === "textarea" &&
         css`
-            height: calc(${Variables.Margins.XXS} * 2 + ${Variables.FontSizes.Body} * ${Variables.LineHeight} * 5);
+            height: calc(
+                ${Variables.Margins.XXS} * 2 + ${Variables.FontSizes.Body} *
+                    ${Variables.LineHeight} * 5
+            );
         `}
 `
 
@@ -75,9 +68,7 @@ function Input(props) {
     const visible = isVisible ? "text" : "password"
 
     return (
-        <Container>
-            <Label htmlFor={props.id}>{props.label}</Label>
-
+        <InputContainer label={props.label} id={props.id}>
             {props.inputtype === "password" ? (
                 <Password>
                     <InputStyled
@@ -116,7 +107,7 @@ function Input(props) {
             )}
 
             {props.helper && <Font.Subtitle>{props.helper}</Font.Subtitle>}
-        </Container>
+        </InputContainer>
     )
 }
 

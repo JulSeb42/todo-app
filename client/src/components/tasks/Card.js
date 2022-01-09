@@ -20,17 +20,17 @@ import convertDate from "../utils/convertDate"
 const Container = styled.div`
     width: 100%;
     padding: ${Variables.Margins.S};
-    border: 1px solid ${Variables.ThemeColors.LightGray};
+    border: 1px solid ${Variables.ThemeColors.LighterGray};
     border-radius: ${Variables.Radii.M};
     display: grid;
     grid-template-columns: 1fr;
-    gap: ${Variables.Margins.M};
+    gap: ${Variables.Margins.L};
 `
 
 const TitleContainer = styled.span`
     display: grid;
     grid-template-columns: 1fr;
-    gap: ${Variables.Margins.XXS};
+    gap: ${Variables.Margins.S};
 `
 
 const Title = styled(Font.H4)`
